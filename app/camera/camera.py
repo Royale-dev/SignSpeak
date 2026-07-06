@@ -35,10 +35,13 @@ class Camera:
         if not success:
             raise RuntimeError("Failed to capture frame from webcam.")
 
-        return frame
-    def release(self):
-        """
-        Releases the webcam resources.
-        """
+        # Flip the frame horizontally (mirror view)
+        frame = cv2.flip(frame, 1)
 
-        self.cap.release()
+        return frame
+        def release(self):
+            """
+            Releases the webcam resources.
+            """
+
+            self.cap.release()
