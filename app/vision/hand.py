@@ -13,7 +13,9 @@ class Hand:
     def __init__(self, label, confidence, landmarks):
         self.label = label
         self.confidence = confidence
-        self.landmarks = landmarks
+
+        # Store only the list of 21 landmarks, not the entire MediaPipe object.
+        self.landmarks = landmarks.landmark
 
     # -----------------------------
     # Landmark Properties
@@ -21,47 +23,47 @@ class Hand:
 
     @property
     def wrist(self):
-        return self.landmarks.landmark[0]
+        return self.landmarks[0]
 
     @property
     def thumb_tip(self):
-        return self.landmarks.landmark[4]
+        return self.landmarks[4]
 
     @property
     def thumb_ip(self):
-        return self.landmarks.landmark[3]
+        return self.landmarks[3]
 
     @property
     def index_mcp(self):
-        return self.landmarks.landmark[5]
+        return self.landmarks[5]
 
     @property
     def index_tip(self):
-        return self.landmarks.landmark[8]
+        return self.landmarks[8]
 
     @property
     def middle_mcp(self):
-        return self.landmarks.landmark[9]
+        return self.landmarks[9]
 
     @property
     def middle_tip(self):
-        return self.landmarks.landmark[12]
+        return self.landmarks[12]
 
     @property
     def ring_mcp(self):
-        return self.landmarks.landmark[13]
+        return self.landmarks[13]
 
     @property
     def ring_tip(self):
-        return self.landmarks.landmark[16]
+        return self.landmarks[16]
 
     @property
     def pinky_mcp(self):
-        return self.landmarks.landmark[17]
+        return self.landmarks[17]
 
     @property
     def pinky_tip(self):
-        return self.landmarks.landmark[20]
+        return self.landmarks[20]
 
     # -----------------------------
     # Finger State Properties

@@ -10,6 +10,7 @@ from collections import deque
 
 from camera.camera import Camera
 from vision.hand_detector import HandDetector
+from data.collector import Collector
 
 
 def main():
@@ -17,9 +18,12 @@ def main():
     Starts the SignSpeak application.
     """
 
+    # -----------------------------
     # Initialize modules
+    # -----------------------------
     camera = Camera()
     detector = HandDetector()
+    collector = Collector("datasets/raw/gestures.csv")
 
     # Used to calculate FPS
     prev_time = time.time()
@@ -29,7 +33,9 @@ def main():
 
     while True:
 
+        # -----------------------------
         # Capture one frame
+        # -----------------------------
         frame = camera.get_frame()
 
         # Detect hands
@@ -134,14 +140,29 @@ def main():
             2,
         )
 
+        # -----------------------------
+        # Draw collector UI
+        # -----------------------------
+        collector.draw(frame)
+
+        # -----------------------------
         # Display frame
+        # -----------------------------
         cv2.imshow("SignSpeak", frame)
 
-        # Quit when Q is pressed
-        if cv2.waitKey(1) & 0xFF == ord("q"):
+        # -----------------------------
+        # Handle keyboard input
+        # -----------------------------
+        key = cv2.waitKey(1) & 0xFF
+
+        collector.update(key, hands)
+
+        if key == ord("q"):
             break
 
+    # -----------------------------
     # Release resources
+    # -----------------------------
     camera.release()
     cv2.destroyAllWindows()
 
